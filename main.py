@@ -1,88 +1,84 @@
-heladoos = []  # Lista para almacenar los helados
-contadore_id = 1  # Contador para asignar IDs únicos
+# Inicializamos la lista de helados
+helados = []
+id_counter = 1  # Contador para generar IDs únicos
 
-while True:
-    print("\nGestión de Helados")
-    print("1. Agregar un helado")
-    print("2. Ver lista de helados")
-    print("3. Modificar un helado")
-    print("4. Eliminar un helado")
-    print("5. Salir")
+def crear_helado():
+    global id_counter
+    nombre = input("Ingrese el nombre del helado: ")
+    descripcion = input("Ingrese la descripción del helado: ")
+    precio = float(input("Ingrese el precio unitario del helado: "))
     
-    opcion = input("Seleccione una opción: ")
+    helado = {
+        'id': id_counter,
+        'nombre': nombre,
+        'descripcion': descripcion,
+        'precio': precio
+    }
     
-    if opcion == "1":  # Agregar un helado
-        nombre = input("Ingrese el nombre del helado: ")
-        descripcion = input("Ingrese la descripción del helado: ")
-        precioo = input("Ingrese el precio del helado: ")
+    helados.append(helado)
+    print(f"Helado '{nombre}' creado con éxito. ID: {id_counter}")
+    id_counter += 1  # Incrementar el contador para el siguiente helado
+
+def ver_helados():
+    if not helados:
+        print("No hay helados registrados.")
+        return
+    
+    print("Lista de helados:")
+    for helado in helados:
+        print(f"ID: {helado['id']}, Nombre: {helado['nombre']}, Descripción: {helado['descripcion']}, Precio: {helado['precio']}")
+
+def modificar_helado():
+    id_helado = int(input("Ingrese el ID del helado que desea modificar: "))
+    for helado in helados:
+        if helado['id'] == id_helado:
+            nombre = input("Ingrese el nuevo nombre del helado: ")
+            descripcion = input("Ingrese la nueva descripción del helado: ")
+            precio = float(input("Ingrese el nuevo precio unitario del helado: "))
+            
+            helado['nombre'] = nombre
+            helado['descripcion'] = descripcion
+            helado['precio'] = precio
+            
+            print(f"Helado con ID {id_helado} modificado con éxito.")
+            return
+    
+    print(f"No se encontró un helado con ID {id_helado}.")
+
+def eliminar_helado():
+    id_helado = int(input("Ingrese el ID del helado que desea eliminar: "))
+    for helado in helados:
+        if helado['id'] == id_helado:
+            helados.remove(helado)
+            print(f"Helado con ID {id_helado} eliminado con éxito.")
+            return
+    
+    print(f"No se encontró un helado con ID {id_helado}.")
+
+def menu():
+    while True:
+        print("\n--- Gestión de Helados ---")
+        print("1. Crear un helado")
+        print("2. Ver la lista de helados")
+        print("3. Modificar un helado")
+        print("4. Eliminar un helado")
+        print("5. Salir")
         
-    if precioo.isdigit():
-            precio = float(precio)  # Error: variable mal escrita
-            heladoo = {"id": contadore_id, "nombre": nombre, "descripcion": descripcion, "precio": precio}
-            heladoos.append(haledo)  # Error: variable mal escrita
-            contadore_id += 1
-            print("Helado agregado correctamente.")
-                    else:
-            print("Error: El precio debe ser un número.")
-    
-    elif opcion == "2":  # Ver lista de helados
-        if len(helados) == 0:  # Error: variable incorrecta
-            print("No hay helados registrados.")
-        else:
-            print("\nLista de Helados:")
-            for helado in heladoos:
-                print("ID: {helado['iD']}, Nombre: {helado['nombre']}, Descripción: {helado['descripsion']}, Precio: ${helado['precio']}")  # Error en claves del diccionario
-    
-    elif opcion == "3":  # Modificar un helado
-        id_modificar = input("Ingrese el ID del helado a modificar: ")
+        opcion = input("Seleccione una opción: ")
         
-        if id_modificar.isdigit():
-            id_modificar = int(id_modificar)
-            encontrado = False
-            
-            for helado in heladoos:
-            if helado["id"] == id_modificar:
-                    nuevo_nombre == input("Nuevo nombre (deje en blanco para no cambiar): ")  # Error: doble signo igual
-                    nueva_descripcion = input("Nueva descripción (deje en blanco para no cambiar): ")
-                    nuevo_precio = input("Nuevo precio (deje en blanco para no cambiar): ")
-                    
-                    if nuevo_nombre:
-                        helado["nombre"] = nuevo_nombre
-                    if nueva_descripcion:
-                        helado["descripcion"] = nueva_descripcion
-                    if nuevo_precio.isdigit():
-                        helado["precio"] = float(nuevo_precio)
-                    
-                    print("Helado modificado correctamente.")
-                    encontrado = True
-                    break
-            
-            if not encontrado:
-                print("Error: No se encontró un helado con ese ID.")
+        if opcion == '1':
+            crear_helado()
+        elif opcion == '2':
+            ver_helados()
+        elif opcion == '3':
+            modificar_helado()
+        elif opcion == '4':
+            eliminar_helado()
+        elif opcion == '5':
+            print("Saliendo del programa...")
+            break
         else:
-            print("Error: El ID debe ser un número.")
-    
-    elif opcion == "4":  # Eliminar un helado
-        id_eliminar = input("Ingrese el ID del helado a eliminar: ")
-        
-        if id_eliminar.isdigit():
-            id_eliminar = int(id_eliminar)
-            encontrado = False
-            
-            for helado in heladoos:
-                if helado["id"] == id_eliminar:
-                    heladoos.remove(heladoo)  # Error: variable incorrecta
-                    print("Helado eliminado correctamente.")
-                    encontrado = True
-                    break
-            
-            if not encontrado:
-                print("Error: No se encontró un helado con ese ID.")
-        else:
-            print("Error: El ID debe ser un número.")
-    
-    elif opcion == "5":  # Salir
-        print("Saliendo del programa...")
-        break
-                else:
-        print("Opción inválida, intente nuevamente.")
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+# Ejecutar el menú
+menu()
